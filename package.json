@@ -1,0 +1,24 @@
+{
+  "name": "react-mongodb",
+  "version": "1.0.0",
+  "description": "A simple starter kit to integrate react from frontend with nodejs-mongoDb in backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SupreethDhareshwar/react-mongodb.git"
+  },
+  "keywords": [
+    "React",
+    "MongoDb",
+    "NodeJS"
+  ],
+  "author": "SupreethD",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/SupreethDhareshwar/react-mongodb/issues"
+  },
+  "homepage": "https://github.com/SupreethDhareshwar/react-mongodb#readme"
+}
