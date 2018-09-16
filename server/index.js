@@ -6,7 +6,10 @@ module.exports=function(app){
   app.get('/api/tedData', async (req, res,next)=> {
     try{
       const db = req.app.locals.db;
-      const tedData = await db.collection(config.db.connection.tedCollection).find({}).limit(100).toArray();
+      const perPage = 100;
+      var page = parseInt(req.query.page);
+      page+=1;
+      const tedData = await db.collection(config.db.connection.tedCollection).find({}).skip((perPage * page) - perPage).limit(perPage).toArray();
         if(tedData){
           res.send(tedData);
         }

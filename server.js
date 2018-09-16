@@ -11,9 +11,7 @@ app.set("port", process.env.PORT || 3001);
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
-app.get("/api/food", (req, res) => {
-  console.log("Got Hit");
-});
+
 var testApp=new api(app);
 var url = config.db.client+'://'+config.db.connection.host+':'+config.db.connection.port+'/'+config.db.connection.database;
 MongoClient.connect(url, { 
