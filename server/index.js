@@ -1,11 +1,22 @@
-var db = require('./Database');
-db=new db();
-db.connect();
+var config=require("../config.json");
+
+
+
 module.exports=function(app){
-  app.get('/api/tedData', function (req, res) {
-              db.getTedData(function(err,result){
-            err ? res.send(500,err):res.send(200,result)
-        });
-      });
+  app.get('/api/tedData', async (req, res,next)=> {
+    try{
+      const db = req.app.locals.db;
+      const tedData = await db.collection(config.db.connection.tedCollection).find({}).limit(100).toArray();
+        if(tedData){
+          res.send(tedData);
+        }
+        else{
+          res.sendStatus(404);
+        }
+    }
+    catch(err){
+        next(err);
+    }
+  });
    
 };

@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
+const MongoClient = require('mongodb').MongoClient;
+
 var api=require('./server/index.js');
+const config=require("./config.json");
 
 app.set("port", process.env.PORT || 3001);
 
@@ -12,7 +15,17 @@ app.get("/api/food", (req, res) => {
   console.log("Got Hit");
 });
 var testApp=new api(app);
-
-app.listen(app.get("port"), () => {
-  console.log(`Find the server at: http://localhost:${app.get("port")}/`); // eslint-disable-line no-console
+var url = config.db.client+'://'+config.db.connection.host+':'+config.db.connection.port+'/'+config.db.connection.database;
+MongoClient.connect(url, { 
+  useNewUrlParser: true
+ }, (err, database) => {
+  if (err) {
+    logger.warn(`Failed to connect to the database. ${err.stack}`);
+  }
+  app.locals.db = database.db(config.db.connection.database);
+  app.listen(app.get("port"), () => {
+    console.log(`Find the server at: http://localhost:${app.get("port")}/`); // eslint-disable-line no-console
+  });
 });
+
+
