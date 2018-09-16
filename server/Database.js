@@ -6,17 +6,19 @@ var dbObj;
 var url = config.db.client+'://'+config.db.connection.host+':'+config.db.connection.port+'/'+config.db.connection.database;
 function Database(){}
    Database.prototype.connect = function () {
-     MongoClient.connect(url, function(err, db) {
+     MongoClient.connect(url,{
+      useNewUrlParser: true
+     }, function(err, db) {
   assert.equal(null, err);
-  console.log("Connected correctly to server");
+  console.log("Connected to MongoDB server");
   dbObj=db;
 });
 }
- Database.prototype.getMatches = function (callback) {
+ Database.prototype.getTedData = function (callback) {
    // Get the documents collection
-   var collection = dbObj.collection(config.db.connection.matchCollection);
+   var collection = dbObj.collection(config.db.connection.tedCollection);
    // Find some documents
-   collection.find({}).toArray(function(err, docs) {
+   collection.find({}).limit(100).toArray(function(err, docs) {
      assert.equal(err, null);
      //callback(err,null);
     // console.log("Found the following records");
@@ -24,15 +26,5 @@ function Database(){}
      callback(null,docs);
    });
 }
-Database.prototype.getDeliveries = function (callback) {
-  // Get the documents collection
-  var collection = dbObj.collection(config.db.connection.deliveriesCollection);
-  // Find some documents
-  collection.find({}).toArray(function(err, docs) {
-    assert.equal(err, null);
-    //console.log("Found the following records");
-    //console.dir(docs);
-    callback(null,docs);
-  });
-}
+
 module.exports =  Database;
